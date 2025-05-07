@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lperalta <lperalta@student.42malaga.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 10:25:38 by lperalta          #+#    #+#             */
-/*   Updated: 2025/05/05 11:00:32 by lperalta         ###   ########.fr       */
+/*   Created: 2025/05/02 12:40:06 by lperalta          #+#    #+#             */
+/*   Updated: 2025/05/02 12:40:08 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strrchr(const char *s, int c)
 {
-	size_t	len;
-	char	*strdest;
+	int				len;
+	char			*str;
+	unsigned char	x;
 
-	len = (ft_strlen(s1) + ft_strlen(s2) + 1);
-	strdest = (char *) malloc (len * sizeof (char));
-	if (!strdest)
-		return (NULL);
-	ft_strlcpy(strdest, s1, len);
-	ft_strlcat(strdest, s2, len);
-	return (strdest);
+	x = (unsigned char) c;
+	str = (char *) s;
+	len = ft_strlen(s);
+	str += len;
+	if (x == '\0')
+		return (str);
+	while (--str)
+	{
+		if (*str == x)
+			return (str);
+	}
+	return (NULL);
 }
