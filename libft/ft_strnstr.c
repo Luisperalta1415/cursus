@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lperalta <lperalta@student.42malaga.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:40:06 by lperalta          #+#    #+#             */
-/*   Updated: 2025/05/02 12:40:08 by lperalta         ###   ########.fr       */
+/*   Created: 2025/05/07 09:44:55 by lperalta          #+#    #+#             */
+/*   Updated: 2025/05/07 09:45:57 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	int				len;
-	char			*str;
-	unsigned char	x;
+	size_t	j;
 
-	x = (unsigned char) c;
-	str = (char *) s;
-	len = ft_strlen(s);
-	str += len;
-	while (len >= 0)
+	if (!*little)
+		return ((char *) big);
+	while (*big && (0 < len))
 	{
-		if (*str == x)
-			return (str);
-		str --;
+		j = 0;
+		while (big[j] && little[j] == big[j])
+			j ++;
+		if (j == ft_strlen(little) && j <= len)
+			return ((char *) big);
+		big ++;
 		len --;
 	}
 	return (NULL);
