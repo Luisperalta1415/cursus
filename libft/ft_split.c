@@ -17,20 +17,19 @@ static int	ft_wordcount(char const *s, char c)
 	int	words;
 
 	words = 0;
-	while (!s)
+	while (*s)
 	{
-		if (*s == c && (s[1] || s[1] == c))
+		if (*s != c && (s[1] || s[1] == c))
 			words ++;
 		s++;
 	}
-	
 	return (words);
 }
 
 static char	**mok(int words)
 {
-	char	**split;
-
+	char	**split; 
+	
 	split = malloc(sizeof(char *) * (words + 1));
 	if (!split)
 		return (NULL);
@@ -38,9 +37,9 @@ static char	**mok(int words)
 	return (split);
 }
 
-static void	*freemem(char *split, int x)
+static void	**freemem(char *split, int x)
 {
-	while (x--)
+	while (x --)
 		free(split[x]);
 	free(split);
 	return (NULL);
@@ -58,19 +57,36 @@ char	**ft_split(char const *s, char c)
 	wcnt = 0;
 	while (s[wcnt])
 	{
-		ccnt = 0;
-		if (s[ccnt] && s[ccnt] != c)
-			ccnt ++;
-		str[wcnt] = ft_substr(s, 0, ccnt);
-		if (!str[wcnt])
-			freemem(str, wcnt);
-			return (NULL);
-		wcnt ++;
+		if (*s != c)
+		{
+			ccnt = 0;
+			while (s[ccnt] && s[ccnt] != c)
+				ccnt ++;
+			str[wcnt] = ft_substr(s, 0, ccnt);
+			if (!str[wcnt])
+				return (freemem(str, wcnt));
+			s += ccnt;
+			wcnt ++;
+		}
+		else
+			s ++;
 	}
 	return (str);
-	
-	
-	
-	
-	
 }
+
+/*int main()
+{
+	char *str = "HOla  mundo  cruel";
+	char **final = ft_split(str, ' ');
+	int i = 0;
+	if (!final)
+		return(NULL);
+	while (final[i])
+	{
+		printf("%s\n", final[i]);
+		free(final[i]);
+		i++;
+	}
+	return(0);
+}
+*/
