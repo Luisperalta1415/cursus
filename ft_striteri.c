@@ -25,3 +25,16 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 		i++;
 	}
 }
+
+/*void	ft_substitute(unsigned int i, char *s)
+{
+	*s = i + '0';
+}
+
+int	main(void)
+{
+	char	str[] = "hola0cara0cola";
+	ft_striteri(str, ft_substitute);
+	printf("%s\n", str);
+	return (0);	
+}*/

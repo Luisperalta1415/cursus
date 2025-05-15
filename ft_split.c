@@ -6,7 +6,7 @@
 /*   By: lperalta <lperalta@student.42malaga.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:26:13 by lperalta          #+#    #+#             */
-/*   Updated: 2025/05/08 13:04:00 by lperalta         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:45:26 by lperalta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_wordcount(char const *s, char c)
 	words = 0;
 	while (*s)
 	{
-		if (*s != c && (s[1] || s[1] == c))
+		if (*s != c && (!s[1] || s[1] == c))
 			words ++;
 		s++;
 	}
@@ -28,8 +28,8 @@ static int	ft_wordcount(char const *s, char c)
 
 static char	**mok(int words)
 {
-	char	**split; 
-	
+	char	**split;
+
 	split = malloc(sizeof(char *) * (words + 1));
 	if (!split)
 		return (NULL);
@@ -37,7 +37,7 @@ static char	**mok(int words)
 	return (split);
 }
 
-static void	**freemem(char *split, int x)
+static char	**freemem(char **split, int x)
 {
 	while (x --)
 		free(split[x]);
@@ -49,44 +49,44 @@ char	**ft_split(char const *s, char c)
 {
 	int		wcnt;
 	int		ccnt;
-	char	**str;
+	char	**split;
 
-	str = mok(ft_wordcount(s, c));
-	if (!str)
+	split = mok(ft_wordcount(s, c));
+	if (!split)
 		return (NULL);
 	wcnt = 0;
-	while (s[wcnt])
+	while (*s)
 	{
 		if (*s != c)
 		{
 			ccnt = 0;
 			while (s[ccnt] && s[ccnt] != c)
 				ccnt ++;
-			str[wcnt] = ft_substr(s, 0, ccnt);
-			if (!str[wcnt])
-				return (freemem(str, wcnt));
+			split[wcnt] = ft_substr(s, 0, ccnt);
+			if (!split[wcnt])
+				return (freemem(split, wcnt));
 			s += ccnt;
 			wcnt ++;
 		}
 		else
 			s ++;
 	}
-	return (str);
+	return (split);
 }
 
-/*int main()
+/*int	main(void)
 {
-	char *str = "HOla  mundo  cruel";
-	char **final = ft_split(str, ' ');
-	int i = 0;
+	char	*str = "Hello!";
+	char	**final = ft_split(str, ' ');
+	int		i = 0;
 	if (!final)
-		return(NULL);
+		return (NULL);
 	while (final[i])
 	{
 		printf("%s\n", final[i]);
 		free(final[i]);
 		i++;
 	}
-	return(0);
-}
-*/
+	printf("%s\n", final[i]);
+	return	(0);
+}*/
